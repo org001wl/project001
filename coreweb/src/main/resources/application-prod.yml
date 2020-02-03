@@ -1,0 +1,73 @@
+server:
+  port: 7333
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+#spring:
+#  datasource:
+#    username: swdx
+#    password: 111111
+#    url: jdbc:mysql://10.144.213.25:3306/fishcms_swdx?&useUnicode=true&characterEncoding=utf8
+#    driver-class-name: com.mysql.jdbc.Driver
+#  redis:
+#    database: 0
+#    host: 10.144.213.25
+#    port: 6380
+#    password: foobared
+#  application:
+#    name: service_usercenter
+#mybatis:
+#  mapper-locations: classpath:/mybatis/mapper/*Mapper.xml
+#  #  type-aliases-package: com.bigdata.cmsweb.entity
+#  config-location: classpath:/mybatis/mybatis-config.xml
+spring:
+  application:
+    name: content
+  datasource:
+    username: mysql
+    password: mysql
+    url: jdbc:mysql://127.0.0.1:3306/iankang?&useUnicode=true&characterEncoding=utf8&serverTimezone=CTT
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+  #    password: foobared
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 500MB
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+    static-locations: classpath:/static/,file:${cms.fileRootPath}
+#    熔断器打开
+feign:
+  hystrix:
+    enabled: true
+mybatis-plus:
+  mapper-locations: classpath*:mybatis/mapper/**.xml
+  global-config:
+    db-config:
+      id-type: uuid
+      table-prefix: cat_
+      table-underline: true
+  type-aliases-package: com.akbigdata.usercenter.entity
+  configuration:
+    map-underscore-to-camel-case: true
+cms:
+  auth: false
+  fileRootPath: /home/nginx/iankang/html/file/
+  serverUrl: https://iak.ankang.gov.cn/file/
+logging:
+  level:
+    com.akbigdata.usercenter.mapper: info
+#  config-location: classpath:mybatis/mybatis-config.xml
